@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.17)
+project(cdhGame)
+
+set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/CMakeModules")
+
+#############
+# Qt
+find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+message(STATUS "Qt5Core_INCLUDE_DIRS:${Qt5Core_INCLUDE_DIRS}")
+message(STATUS "Qt5Widgets_INCLUDE_DIRS:${Qt5Widgets_INCLUDE_DIRS}")
+include_directories(
+    ${Qt5Core_INCLUDE_DIRS}
+    ${Qt5Widgets_INCLUDE_DIRS}
+)
+
+############
+# osg
+find_package(OpenSceneGraph REQUIRED COMPONENTS osg osgViewer osgUtil osgGA osgDB)
+message(STATUS "OPENSCENEGRAPH_INCLUDE_DIRS:${OPENSCENEGRAPH_INCLUDE_DIRS}")
+message(STATUS "OPENSCENEGRAPH_LIBRARIES:${OPENSCENEGRAPH_LIBRARIES}")
+include_directories(${OPENSCENEGRAPH_INCLUDE_DIRS})
+
+############
+# osgEarth
+find_package(OsgEarth REQUIRED COMPONENTS osgEarth)
+set(
+    OSGEARTH_LIBRARIES
+    ${OSGEARTH_LIBRARY}
+    ${OSGEARTHFEATURES_LIBRARY}
+    ${OSGEARTHUTIL_LIBRARY}
+    ${OSGEARTHSYMBOLOGY_LIBRARY}
+    ${OSGEARTHANNOTATION_LIBRARY}
+)
+message(STATUS "OSGEARTH_INCLUDE_DIRS:${OSGEARTH_INCLUDE_DIRS}")
+message(STATUS "OSGEARTH_LIBRARIES:${OSGEARTH_LIBRARIES}")
+include_directories(${OSGEARTH_INCLUDE_DIRS})
+
+add_subdirectory(src)
